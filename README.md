@@ -43,9 +43,28 @@ show dbs              // testdb가 실제로 생겼는지 확인
 show collections      // users 컬렉션이 보이는지 확인
 
 
+
+
 db.users.find().pretty()
 ```
 
+
+더미테이터
+
+```
+db.users.insertMany([
+  { name: 'Bob', email: 'bob@example.com' },
+  { name: 'Charlie', email: 'charlie@example.com' },
+  { name: 'dd', email: 'ddd' },
+  { name: 'Eve', email: 'eve@example.com' },
+  { name: 'Frank', email: 'frank@example.com' },
+  { name: 'Grace', email: 'grace@example.com' },
+  { name: 'Hank', email: 'hank@example.com' },
+  { name: 'Ivy', email: 'ivy@example.com' },
+  { name: 'Jack', email: 'jack@example.com' }
+])
+
+```
 
 ### 실행
 
