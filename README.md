@@ -1,3 +1,21 @@
+### MySQL / MongoDB with Docker
+window 환경
+```
+
+docker run -d --name mysql-container -e MYSQL_ROOT_PASSWORD=rootpw -e MYSQL_DATABASE=testdb -p 3306:3306 mysql:8
+
+docker run -d --name mongo-container -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=adminpw -p 27017:27017 mongo:6
+
+
+docker exec -it mysql-container mysql -u root -p
+
+
+docker exec -it mongo-container mongosh -u admin -p adminpw --authenticationDatabase admin
+
+
+```
+
+
 ### MySQL
 ```
 MYSQL_USER=root
@@ -8,6 +26,7 @@ MYSQL_DB=testdb
 
 ```
 
+db / 테이블생성
 ```
 CREATE DATABASE IF NOT EXISTS testdb;
 USE testdb;
@@ -70,7 +89,7 @@ db.users.insertMany([
 
 1. 가상환경생성 `python3 -m venv venv`
 
-2. mac: `source venv/bin/activate`  Windows일 경우: `venv\Scripts\activate`
+2. mac: `source venv/bin/activate`  Windows일 경우: `.\venv\Scripts\Activate.ps1`
 
 3. pip install -r requirements.txt
 
