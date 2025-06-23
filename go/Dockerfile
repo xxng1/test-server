@@ -6,7 +6,7 @@ WORKDIR /app
 
 # go.mod, go.sum 먼저 복사하고 의존성 다운로드
 COPY go.mod .         
-COPY go.sum .         
+# COPY go.sum .         
 RUN go mod download
 
 # 그다음 전체 복사
