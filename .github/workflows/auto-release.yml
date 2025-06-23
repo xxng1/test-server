@@ -16,9 +16,20 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    # - name: Generate timestamp tag
+    #   id: version
+    #   run: echo "TAG_NAME=v$(date +'%Y.%m.%d.%H%M%S')" >> $GITHUB_ENV
+
     - name: Generate timestamp tag
-      id: version
-      run: echo "TAG_NAME=v$(date +'%Y.%m.%d.%H%M%S')" >> $GITHUB_ENV
+      id: tag
+      run: |
+        TAG_NAME=v$(date +'%Y.%m.%d.%H%M%S')
+        echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git tag $TAG_NAME
+        git push origin $TAG_NAME
+
 
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
