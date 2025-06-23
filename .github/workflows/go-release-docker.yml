@@ -5,7 +5,7 @@ on:
     types: [published, created]
 
 permissions:
-  contents: read
+  contents: write  # 🔥 여기 수정!
 
 jobs:
   build-and-push:
