@@ -17,6 +17,7 @@ jobs:
 
     - name: Generate timestamp tag
       run: |
+        export TZ=Asia/Seoul
         TAG_NAME=v$(date +'%Y.%m.%d.%H%M%S')
         echo "TAG_NAME=$TAG_NAME" >> $GITHUB_ENV
         git config user.name "github-actions"
