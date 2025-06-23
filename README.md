@@ -1,3 +1,17 @@
+### Go, Springboot, Fastapi
+
+### CI/CD (+ Automated Release )
+
+
+
+
+
+---
+
+
+### Setting
+<details>
+
 ### MySQL / MongoDB with Docker
 window 환경
 ```
@@ -94,3 +108,5 @@ db.users.insertMany([
 3. pip install -r requirements.txt
 
 4. uvicorn main:app --reload
+
+</details>
