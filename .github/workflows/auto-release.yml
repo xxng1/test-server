@@ -1,0 +1,27 @@
+name: Auto Release from Main Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Get version from timestamp
+      id: version
+      run: echo "TAG_NAME=v$(date +'%Y.%m.%d.%H%M%S')" >> $GITHUB_ENV
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ env.TAG_NAME }}
+        name: "Automated Release ${{ env.TAG_NAME }}"
+        body: "Release triggered automatically from push to main"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
