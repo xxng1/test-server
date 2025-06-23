@@ -1,13 +1,19 @@
 # go/Dockerfile
+
 FROM golang:1.21-alpine AS builder
 
 WORKDIR /app
-COPY main.go .
 
-# 정적 바이너리 빌드
+# go.mod, go.sum 먼저 복사하고 의존성 다운로드
+COPY go.mod .         # ✅ 중요
+COPY go.sum .         # ✅ (있다면)
+RUN go mod download   # ✅
+
+# 그다음 전체 복사
+COPY . .
+
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o myapp
 
-# 런타임용 경량 이미지
 FROM scratch
 COPY --from=builder /app/myapp /myapp
 ENTRYPOINT ["/myapp"]
