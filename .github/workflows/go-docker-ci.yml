@@ -27,4 +27,4 @@ jobs:
         context: ./go
         file: ./go/Dockerfile
         push: true
-        tags: your_dockerhub_id/kafka-test-go:latest
+        tags: xxng/kafka-test-go:latest
