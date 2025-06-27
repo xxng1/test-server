@@ -1,20 +1,22 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from pymongo import MongoClient
 
 # SQLAlchemy 설정 (MySQL)
-DB_URL = "mysql+mysqlconnector://root:rootpw@localhost:3306/testdb"
+DB_URL = (
+    f"mysql+mysqlconnector://{os.getenv('MYSQL_USER')}:{os.getenv('MYSQL_PASSWORD')}"
+    f"@{os.getenv('MYSQL_HOST')}:{os.getenv('MYSQL_PORT')}/{os.getenv('MYSQL_DB')}"
+)
 engine = create_engine(DB_URL)
 SessionLocal = sessionmaker(bind=engine)
 Base = declarative_base()
 
 # MongoDB 설정
-
-# 유저/패스포트 미포함
-# mongo_client = MongoClient('mongodb://localhost:27017/')
-
-# 유저/패스포트 포함
-mongo_client = MongoClient("mongodb://admin:adminpw@localhost:27017/admin")
-
+MONGO_URI = (
+    f"mongodb://{os.getenv('MONGO_USER')}:{os.getenv('MONGO_PASSWORD')}"
+    f"@{os.getenv('MONGO_HOST')}:{os.getenv('MONGO_PORT')}/admin"
+)
+mongo_client = MongoClient(MONGO_URI)
 mongo_db = mongo_client['testdb']
 mongo_users = mongo_db['users']
