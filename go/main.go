@@ -4,5 +4,5 @@ import (
         "os"
 )
 func main() {
-        fmt.Fprintln(os.Stdout, "Go!!! Go")
+        fmt.Fprintln(os.Stdout, "Go!!! Go!")
 }
