@@ -6,7 +6,7 @@ from database import SessionLocal, engine, Base, mongo_users
 from pydantic import BaseModel
 from bson import ObjectId
 
-# FastAPI 앱 초기화
+# FastAPI 앱 초기화 
 app = FastAPI()
 
 # CORS 설정: React 앱(3000번 포트)에서 접근 허용
