@@ -16,11 +16,25 @@ jobs:
         chmod 600 ec2-key.pem
 
         ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-          sudo docker pull xxng/django-apiserver:latest
+          
+          # ECR 정보 설정
+          AWS_REGION=${{ secrets.AWS_REGION }}
+          ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+
+          # ECR 로그인
+          aws ecr get-login-password --region $AWS_REGION | \
+            docker login --username AWS --password-stdin $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+
+          # 이미지 풀 & 실행
+          IMAGE_URI=$ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/${{ secrets.ECR_REPOSITORY }}:latest
+
+          sudo docker pull \$IMAGE_URI
           sudo docker stop django-container || true
           sudo docker rm django-container || true
           sudo docker run -d \
             --name django-container \
             -p 80:80 \
-            xxng/django-apiserver:latest
+            \$IMAGE_URI
         EOF
+          
+          
