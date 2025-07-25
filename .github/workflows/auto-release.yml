@@ -77,9 +77,9 @@ jobs:
           sudo docker stop django-container || true
           sudo docker rm django-container || true
 
-          # 새 컨테이너 실행 (포트, 볼륨 필요시 수정)
+          # 새 컨테이너 실행 (포트 80으로 앱단에서 설정)
           sudo docker run -d \
             --name django-container \
-            -p 8000:8000 \
+            -p 80:80 \
             xxng/django-apiserver:latest
         EOF
