@@ -1,0 +1,26 @@
+name: Deploy Django to EC2
+
+on:
+  workflow_dispatch:   # 수동 실행
+  # 또는 release 이벤트 사용
+  # release:
+  #   types: [published]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy to EC2
+      run: |
+        echo "${{ secrets.EC2_KEY }}" | base64 -d > ec2-key.pem
+        chmod 600 ec2-key.pem
+
+        ssh -o StrictHostKeyChecking=no -i ec2-key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          sudo docker pull xxng/django-apiserver:latest
+          sudo docker stop django-container || true
+          sudo docker rm django-container || true
+          sudo docker run -d \
+            --name django-container \
+            -p 80:80 \
+            xxng/django-apiserver:latest
+        EOF
