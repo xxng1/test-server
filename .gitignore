@@ -5,4 +5,11 @@ __pycache__/
 *.sqlite3
 .env
 .DS_Store
-./venv
+
+
+# Django
+db.sqlite3
+*.pyc
+
+# Virtual Environments
+venv/
