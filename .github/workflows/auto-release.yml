@@ -51,3 +51,13 @@ jobs:
         push: true
         tags: |
           xxng/kafka-test-go:${{ env.TAG_NAME }}
+
+    # ✅ Django (apiserver) 이미지 빌드 & 푸시
+    - name: Build and Push Django image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./apiserver
+        file: ./apiserver/Dockerfile
+        push: true
+        tags: |
+          xxng/django-apiserver:${{ env.TAG_NAME }}          
