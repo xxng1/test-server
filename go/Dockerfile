@@ -1,11 +1,16 @@
-FROM golang:1.22.3-alpine AS builder
+# ./go/Dockerfile
+FROM golang:1.22 AS build
 
 WORKDIR /app
-
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o myapp
+RUN go build -o server main.go
 
-FROM scratch
-COPY --from=builder /app/myapp /myapp
-ENTRYPOINT ["/myapp"]
+# ---- Runtime Stage ----
+FROM debian:bullseye-slim
+
+WORKDIR /app
+COPY --from=build /app/server .
+
+EXPOSE 8080
+CMD ["./server"]
